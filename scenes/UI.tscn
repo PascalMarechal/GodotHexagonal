@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://cepxws7dkd1ub"]
+
+[ext_resource type="Script" path="res://src/adapters/presenters/CountPresenter.cs" id="1_rdjdk"]
+[ext_resource type="Script" path="res://src/adapters/controllers/TestButton.cs" id="2_sp8aj"]
+[ext_resource type="Script" path="res://src/adapters/views/CountValue.cs" id="3_lru2f"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rdjdk")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="TestButton" type="Button" parent="CenterContainer/VBoxContainer" node_paths=PackedStringArray("_presenter")]
+layout_mode = 2
+text = "Test Button"
+script = ExtResource("2_sp8aj")
+_presenter = NodePath("../../..")
+
+[node name="CountValue" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("3_lru2f")
+
+[connection signal="CountChanged" from="." to="CountValue" method="SetText"]
+[connection signal="button_down" from="CenterContainer/VBoxContainer/TestButton" to="CenterContainer/VBoxContainer/TestButton" method="IncrementCount"]
